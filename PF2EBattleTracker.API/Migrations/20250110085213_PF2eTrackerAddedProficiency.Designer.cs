@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PF2EBattleTracker.API.DbContexts;
 
@@ -10,9 +11,11 @@ using PF2EBattleTracker.API.DbContexts;
 namespace PF2EBattleTracker.API.Migrations
 {
     [DbContext(typeof(CharacterInfoContext))]
-    partial class CharacterInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20250110085213_PF2eTrackerAddedProficiency")]
+    partial class PF2eTrackerAddedProficiency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
