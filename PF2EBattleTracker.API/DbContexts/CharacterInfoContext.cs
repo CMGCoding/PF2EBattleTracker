@@ -7,6 +7,7 @@ namespace PF2EBattleTracker.API.DbContexts
     {
         public DbSet<Character> Characters { get; set; }
         public DbSet<Condition> Conditions { get; set; }
+        public DbSet<Proficiency> Proficiencies { get; set; }
 
         public CharacterInfoContext(DbContextOptions<CharacterInfoContext> options) : base(options) { }
 
