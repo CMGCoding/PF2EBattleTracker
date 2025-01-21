@@ -80,10 +80,9 @@ namespace PF2EBattleTracker.API.Models
             {
                 return Conditions.Count;
             }
-        }
-
-        
+        }        
 
         public ICollection<ConditionDto> Conditions { get; set; } = new List<ConditionDto>();
+        public ICollection<ProficiencyDto> Proficiencies { get; set; } = new List<ProficiencyDto>();
     }
 }

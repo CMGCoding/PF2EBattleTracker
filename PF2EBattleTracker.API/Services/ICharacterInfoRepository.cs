@@ -22,6 +22,16 @@ namespace PF2EBattleTracker.API.Services
         Task AddConditionToCharacterAsync(int characterId,  Condition condition);
 
         void DeleteCondition(Condition condition);
+
+        Task<IEnumerable<Proficiency>> GetProficienciesForCharacterAsync(int characterId);
+
+        Task<Proficiency?> GetProficiencyForCharacterAsync(int characterId, int proficiencyId);
+
+        Task AddProficiencyToCharacterAsync(int characterId, Proficiency proficiency);
+
+        void DeleteProficiency(Proficiency proficiency);
+
+
     }
 }
  

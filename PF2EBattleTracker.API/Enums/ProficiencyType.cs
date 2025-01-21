@@ -7,6 +7,7 @@
         Save,
         Armor,
         Weapon,
-        SpellSchool
+        SpellSchool,
+        Class
     }
 }
