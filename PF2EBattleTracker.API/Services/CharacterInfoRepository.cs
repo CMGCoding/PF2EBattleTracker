@@ -12,13 +12,13 @@ namespace PF2EBattleTracker.API.Services
 
         public async Task<bool> SaveChangesAsync()
         {
-            return (await _context.SaveChangesAsync() >=0);
+            return (await _context.SaveChangesAsync() >= 0);
         }
 
         public CharacterInfoRepository(CharacterInfoContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-        }        
+        }
 
         public async Task<IEnumerable<Character>> GetCharactersAsync()
         {
@@ -32,7 +32,7 @@ namespace PF2EBattleTracker.API.Services
             if (!string.IsNullOrEmpty(name))
             {
                 name = name.Trim();
-                collection = collection.Where( x  => x.Name == name );
+                collection = collection.Where(x => x.Name == name);
             }
 
             if (!string.IsNullOrEmpty(searchQuery))
@@ -44,7 +44,7 @@ namespace PF2EBattleTracker.API.Services
             var totalItemCount = await collection.CountAsync();
 
             var paginationMetaData = new PaginationMetaData(totalItemCount, pageSize, pageNumber);
-            
+
             var collectionToReturn = await collection
                 .OrderBy(x => x.Name)
                 .Skip(pageSize * (pageNumber - 1))
@@ -58,7 +58,7 @@ namespace PF2EBattleTracker.API.Services
         {
             if (includeDetails)
             {
-                return await _context.Characters.Include(x => x.Conditions).Where(x => x.CharacterId == characterId).FirstOrDefaultAsync();
+                return await _context.Characters.Include(x => x.Conditions).Include(x => x.Proficiencies).Where(x => x.CharacterId == characterId).FirstOrDefaultAsync();
             }
 
             return await _context.Characters.Where(x => x.CharacterId == characterId).FirstOrDefaultAsync();
@@ -92,5 +92,30 @@ namespace PF2EBattleTracker.API.Services
         {
             _context.Conditions.Remove(condition);
         }
+
+        public async Task<IEnumerable<Proficiency>> GetProficienciesForCharacterAsync(int characterId)
+        {
+            return await _context.Proficiencies.Where(x => x.CharacterId == characterId).ToListAsync();
+        }
+
+        public async Task<Proficiency?> GetProficiencyForCharacterAsync(int characterId, int proficiencyId)
+        {
+            return await _context.Proficiencies.Where(x => x.CharacterId == characterId && x.ProficiencyId == proficiencyId).FirstOrDefaultAsync();
+        }
+
+        public async Task AddProficiencyToCharacterAsync(int characterId, Proficiency proficiency)
+        {
+            var character = await GetCharacterAsync(characterId, false);
+            if (character != null)
+            {
+                character.Proficiencies.Add(proficiency);
+            }
+        }
+
+        public void DeleteProficiency(Proficiency proficiency)
+        {
+            _context.Proficiencies.Remove(proficiency);
+        }
+
     }
 }

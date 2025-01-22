@@ -30,5 +30,6 @@ namespace PF2EBattleTracker.API.Entities
         public int Charisma { get; set; }
 
         public ICollection<Condition> Conditions { get; set; } = new List<Condition>();
+        public ICollection<Proficiency> Proficiencies { get; set; } = new List<Proficiency>();
     }
 }

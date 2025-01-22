@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PF2EBattleTracker.API.Entities;
 using PF2EBattleTracker.API.Models;
 using PF2EBattleTracker.API.Services;
 using System.Text.Json;
@@ -17,7 +18,7 @@ namespace PF2EBattleTracker.API.Controllers
         public CharactersController(ICharacterInfoRepository characterInfoRepository, IMapper mapper)
         {
             _characterInfoRepository = characterInfoRepository ?? throw new ArgumentNullException(nameof(characterInfoRepository));
-            _mapper = mapper;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
@@ -49,6 +50,11 @@ namespace PF2EBattleTracker.API.Controllers
 
             if (includeDetails)
             {
+                foreach(Proficiency p in character.Proficiencies)
+                {
+                    p.CalculateBonuses(character);
+                }
+
                 return Ok(_mapper.Map<CharacterDto>(character));
             }
 

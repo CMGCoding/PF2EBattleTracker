@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PF2EBattleTracker.API.DbContexts;
 
@@ -10,9 +11,11 @@ using PF2EBattleTracker.API.DbContexts;
 namespace PF2EBattleTracker.API.Migrations
 {
     [DbContext(typeof(CharacterInfoContext))]
-    partial class CharacterInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20250110164223_PF2eTrackerAddedProficiencyToCharacter")]
+    partial class PF2eTrackerAddedProficiencyToCharacter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +168,6 @@ namespace PF2EBattleTracker.API.Migrations
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("DefaultSkill")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -176,11 +176,12 @@ namespace PF2EBattleTracker.API.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<bool>("SaveDC")
+                    b.Property<bool>("LoreSkill")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Stat")
-                        .HasColumnType("int");
+                    b.Property<string>("Stat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
